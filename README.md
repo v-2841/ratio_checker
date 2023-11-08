@@ -1,4 +1,4 @@
-# Check the ratio of fatty acids after analysis on the Shimadzu gas chromatograph in accordance with GOST 32261
+# Check the ratio of fatty acids after analysis on the Shimadzu GC in accordance with GOST 32261
 
 This program processes a data file from a Shimadzu GC, extracting the areas of specified fatty acids for further ratio analysis. The GOST 32261 standard establishes norms for the ratios of free fatty acids to determine the presence of fats of plant origin. The chromatographic method should specify the retention times of peaks of free fatty acids, whose names contain at least those:
 - C12:0
@@ -47,3 +47,7 @@ Press OK
 Files with the txt extension will appear in the working directory. Each file will contain data from the chromatography of a single analysis
 
 ![4](images/4.jpg)
+
+You can perform calculations by command ```<path_to_file_folder>/ratio_checker.exe <path_to_file_folder>/<file_name>.txt``` or simply drag and drop a file with the txt extension onto the program icon
+
+![5](images/5.jpg)
