@@ -8,7 +8,7 @@ This program processes a data file from a Shimadzu GC, extracting the areas of s
 - C18:1 trans
 - C18:1 cis
 - C18:2 trans
-- C18:2 cis
+- C18:2 cis__
 ![0](images/0.jpg)
 
 ## Compilation script
