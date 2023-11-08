@@ -31,3 +31,12 @@ The program calculates various ratios of fatty acids based on GOST 32261
 | C18:1 : C14:0 | 1.6 - 3.6 |
 | C18:2 : C14:0 | 0.1 - 0.5 |
 | C18:1 + C18:2 : C12:0 + C14:0 + C16:0 + C18:0 | 0.4 - 0.7 |
+## How to compute ratios
+Open the Postrun program with the Data Explorer panel
+![1](images/1.jpg)
+Navigate to the desired directory, select files with the gcd extension -> File Convert -> Data file to ASCII file...
+![2](images/2.jpg)
+Press OK
+![3](images/3.jpg)
+Files with the txt extension will appear in the working directory. Each file will contain data from the chromatography of a single analysis
+![4](images/4.jpg)

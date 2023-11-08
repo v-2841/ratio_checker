@@ -1,4 +1,4 @@
 #include "winuser.h"
 #define IDI_ICON1 101
 
-IDI_ICON1 ICON "favicon.ico"
+IDI_ICON1 ICON "images/favicon.ico"
