@@ -1,11 +1,12 @@
 // gcc -w -mwindows -static window.c resource.res -o window.exe -l gdi32 -l comdlg32
-#include <windows.h>
-#include <tchar.h>
-#include <commdlg.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include <windows.h>
+#include <commdlg.h>
+#include <tchar.h>
 
 #define MAX_LINE_LENGTH 512
 #define IDI_ICON1 101
@@ -68,7 +69,8 @@ void extractName(const char *line)
         if (strcmp(token, "Sample Name") == 0)
         {
             token = strtok(NULL, delim);
-            if (token != NULL) strncpy(sample_name, token, MAX_SAMPLE_NAME_LENGTH - 1);
+            if (token != NULL)
+                strncpy(sample_name, token, MAX_SAMPLE_NAME_LENGTH - 1);
             return;
         }
         token = strtok(NULL, delim);
@@ -85,12 +87,14 @@ void readFile(char *fileAdress)
     while (fgets(line, MAX_LINE_LENGTH, file))
     {
         extractName(line);
-        if (strlen(sample_name) != 0) break;
+        if (strlen(sample_name) != 0)
+            break;
     }
     while (fgets(line, MAX_LINE_LENGTH, file))
     {
         areaColumn = findAreaColumn(line);
-        if (areaColumn != -1) break;
+        if (areaColumn != -1)
+            break;
     }
     c120 = c140 = c160 = c180 = c181 = c182 = 0;
     while (fgets(line, MAX_LINE_LENGTH, file))
@@ -120,7 +124,8 @@ void readFile(char *fileAdress)
 
 LPCTSTR doubleToLPCTSTR(double value)
 {
-    if (isnan(value)) value = 0;
+    if (isnan(value))
+        value = 0;
     double roundedValue = round(value * pow(10, PRECISION)) / pow(10, PRECISION);
     static TCHAR buffer[32];
     _sntprintf(buffer, sizeof(buffer) / sizeof(buffer[0]), _T("%.*f"), PRECISION, roundedValue);
@@ -170,7 +175,8 @@ void DropFile(HDROP hdrop)
     DragFinish(hdrop);
 }
 
-void openFile(HWND hwnd) {
+void openFile(HWND hwnd)
+{
     OPENFILENAME ofn;
     char szFileName[MAX_PATH] = "";
 
@@ -182,21 +188,38 @@ void openFile(HWND hwnd) {
     ofn.nMaxFile = sizeof(szFileName);
     ofn.Flags = OFN_FILEMUSTEXIST;
 
-    if (GetOpenFileName(&ofn)) {
+    if (GetOpenFileName(&ofn))
+    {
         readFile(szFileName);
         setResults();
+        SetFocus(hwnd);
     }
+}
+
+void showAboutDialog(HWND hwnd)
+{
+    MessageBoxW(hwnd, L"Author: Vitaliy Pavlov\nDocumentation: https://github.com/v-2841/ratio_checker", L"About", MB_OK);
 }
 
 LRESULT WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 {
-    if (message == WM_DESTROY) PostQuitMessage(0);
-    else if (message == WM_DROPFILES) DropFile(wparam);
+    if (message == WM_DESTROY)
+        PostQuitMessage(0);
+    else if (message == WM_DROPFILES)
+        DropFile(wparam);
     else if (message == WM_COMMAND)
     {
-        if (LOWORD(wparam) == IDC_OPEN_BUTTON) openFile(hwnd);
+        if (LOWORD(wparam) == IDC_OPEN_BUTTON)
+            openFile(hwnd);
     }
-    else return DefWindowProcA(hwnd, message, wparam, lparam);
+    else if (message == WM_KEYDOWN)
+    {
+        if (LOWORD(wparam) == VK_F1){
+            showAboutDialog(hwnd);
+        }
+    }
+    else
+        return DefWindowProcA(hwnd, message, wparam, lparam);
 }
 
 int main(int argc, char *argv[])
@@ -281,7 +304,6 @@ int main(int argc, char *argv[])
     while (GetMessage(&msg, NULL, 0, 0))
     {
         DispatchMessage(&msg);
-        TranslateMessage(&msg);
     }
 
     return 0;
