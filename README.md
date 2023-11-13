@@ -51,3 +51,5 @@ Files with the txt extension will appear in the working directory. Each file wil
 You can perform calculations by command ```<path_to_file_folder>/ratio_checker.exe <path_to_file_folder>/<file_name>.txt``` or simply drag and drop a file with the txt extension onto the program icon
 
 ![5](images/5.jpg)
+
+OR just use GUI application!
