@@ -52,4 +52,7 @@ You can perform calculations by command ```<path_to_file_folder>/ratio_checker.e
 
 ![5](images/5.jpg)
 
-OR just use GUI application!
+OR just use GUI application for Windows! Compile it with command:
+```
+gcc ratio_checker_gui.c resource.res -o "Ratio checker.exe"
+```
