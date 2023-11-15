@@ -31,11 +31,13 @@ HWND ratio1_comment, ratio2_comment, ratio3_comment, ratio4_comment,
     ratio5_comment;
 char buffer[MAX_NUM_LENGTH];
 
-int findAreaColumn(const char *line) {
+int findAreaColumn(const char *line)
+{
     const char *delim = "\t";
     char *token = strtok((char *)line, delim);
     int column = 0;
-    while (token != NULL) {
+    while (token != NULL)
+    {
         if (strcmp(token, "Area") == 0)
             return column;
         token = strtok(NULL, delim);
@@ -44,13 +46,16 @@ int findAreaColumn(const char *line) {
     return -1;
 }
 
-double extractArea(const char *line, int areaColumn) {
+double extractArea(const char *line, int areaColumn)
+{
     const char *delim = "\t";
     char *token = strtok((char *)line, delim);
     int column = 0;
     double area = 0.0;
-    while (token != NULL) {
-        if (column == areaColumn) {
+    while (token != NULL)
+    {
+        if (column == areaColumn)
+        {
             area = atof(token);
             break;
         }
@@ -60,11 +65,14 @@ double extractArea(const char *line, int areaColumn) {
     return area;
 }
 
-void extractName(const char *line) {
+void extractName(const char *line)
+{
     const char *delim = "\t";
     char *token = strtok((char *)line, delim);
-    while (token != NULL) {
-        if (strcmp(token, "Sample Name") == 0) {
+    while (token != NULL)
+    {
+        if (strcmp(token, "Sample Name") == 0)
+        {
             token = strtok(NULL, delim);
             if (token != NULL)
                 strncpy(sample_name, token, MAX_SAMPLE_NAME_LENGTH - 1);
@@ -73,23 +81,27 @@ void extractName(const char *line) {
     }
 }
 
-void readFile(char *fileAdress) {
+void readFile(char *fileAdress)
+{
     FILE *file = fopen(fileAdress, "r");
     char line[MAX_LINE_LENGTH];
     sample_name[0] = '\0';
     int areaColumn = -1;
-    while (fgets(line, MAX_LINE_LENGTH, file)) {
+    while (fgets(line, MAX_LINE_LENGTH, file))
+    {
         extractName(line);
         if (strlen(sample_name) != 0)
             break;
     }
-    while (fgets(line, MAX_LINE_LENGTH, file)) {
+    while (fgets(line, MAX_LINE_LENGTH, file))
+    {
         areaColumn = findAreaColumn(line);
         if (areaColumn != -1)
             break;
     }
     c120 = c140 = c160 = c180 = c181 = c182 = 0;
-    while (fgets(line, MAX_LINE_LENGTH, file)) {
+    while (fgets(line, MAX_LINE_LENGTH, file))
+    {
         if (strstr(line, "C12:0"))
             c120 = extractArea(line, areaColumn);
         else if (strstr(line, "C14:0"))
@@ -104,7 +116,8 @@ void readFile(char *fileAdress) {
             c181 += extractArea(line, areaColumn);
         else if (strstr(line, "C18:2 trans"))
             c182 = extractArea(line, areaColumn);
-        else if (strstr(line, "C18:2 cis")) {
+        else if (strstr(line, "C18:2 cis"))
+        {
             c182 += extractArea(line, areaColumn);
             break;
         }
@@ -112,8 +125,10 @@ void readFile(char *fileAdress) {
     fclose(file);
 }
 
-char *doubleToChar(double value) {
-    if (isnan(value)) value = 0.0;
+char *doubleToChar(double value)
+{
+    if (isnan(value))
+        value = 0.0;
     double roundedValue =
         round(value * pow(10, PRECISION)) / pow(10, PRECISION);
     _snprintf(buffer, sizeof(buffer) / sizeof(buffer[0]), "%.*f", PRECISION,
@@ -121,7 +136,8 @@ char *doubleToChar(double value) {
     return buffer;
 }
 
-void setResults() {
+void setResults()
+{
     SetWindowTextA(sample_name_hwnd, sample_name);
 
     SetWindowTextA(c120_area, doubleToChar(c120));
@@ -155,7 +171,8 @@ void setResults() {
     SetWindowTextA(ratio5_comment, ratio5_pass);
 }
 
-void DropFile(HDROP hdrop) {
+void DropFile(HDROP hdrop)
+{
     char fname[MAX_PATH];
     DragQueryFile(hdrop, 0, fname, MAX_PATH);
     readFile(fname);
@@ -163,7 +180,8 @@ void DropFile(HDROP hdrop) {
     DragFinish(hdrop);
 }
 
-void openFile(HWND hwnd) {
+void openFile(HWND hwnd)
+{
     OPENFILENAME ofn;
     char szFileName[MAX_PATH] = "";
 
@@ -175,21 +193,24 @@ void openFile(HWND hwnd) {
     ofn.nMaxFile = sizeof(szFileName);
     ofn.Flags = OFN_FILEMUSTEXIST;
 
-    if (GetOpenFileName(&ofn)) {
+    if (GetOpenFileName(&ofn))
+    {
         readFile(szFileName);
         setResults();
         SetFocus(hwnd);
     }
 }
 
-void showAboutDialog(HWND hwnd) {
+void showAboutDialog(HWND hwnd)
+{
     MessageBoxA(hwnd,
                 "Copyright (c) 2023 Vitaliy Pavlov\nSource code: "
                 "https://github.com/v-2841/ratio_checker",
                 "About", MB_OK);
 }
 
-void onlineHelp() {
+void onlineHelp()
+{
     ShellExecuteA(
         NULL, "open", "cmd",
         "/c start "
@@ -197,7 +218,8 @@ void onlineHelp() {
         NULL, SW_HIDE);
 }
 
-void menu(HWND hwnd) {
+void menu(HWND hwnd)
+{
     HMENU hMenu = CreateMenu();
 
     HMENU hFileMenu = CreatePopupMenu();
@@ -217,12 +239,14 @@ void menu(HWND hwnd) {
     SetMenu(hwnd, hMenu);
 }
 
-LRESULT WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
+LRESULT WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
+{
     if (message == WM_CREATE)
         menu(hwnd);
     else if (message == WM_DROPFILES)
         DropFile((HDROP)wparam);
-    else if (message == WM_COMMAND) {
+    else if (message == WM_COMMAND)
+    {
         if (LOWORD(wparam) == IDM_OPEN_BUTTON)
             openFile(hwnd);
         else if (LOWORD(wparam) == IDM_ABOUT)
@@ -232,7 +256,8 @@ LRESULT WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
         else if (LOWORD(wparam) == IDM_EXIT)
             PostQuitMessage(0);
     }
-    else if (message == WM_KEYDOWN) {
+    else if (message == WM_KEYDOWN)
+    {
         if (LOWORD(wparam) == VK_F1)
             onlineHelp();
         else if (GetKeyState(VK_CONTROL) & 0x8000 && wparam == 'O')
@@ -244,7 +269,8 @@ LRESULT WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
         return DefWindowProcA(hwnd, message, wparam, lparam);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     LPRECT rctScr;
     rctScr = malloc(sizeof(*rctScr));
     GetClientRect(GetDesktopWindow(), rctScr);
@@ -266,7 +292,8 @@ int main(int argc, char *argv[]) {
     DragAcceptFiles(hwnd, TRUE);
     MSG msg;
 
-    if (argc != 1) readFile(argv[1]);
+    if (argc != 1)
+        readFile(argv[1]);
 
     HWND sample_name_name_hwnd =
         CreateWindow("static", "Sample name", WS_VISIBLE | WS_CHILD | WS_BORDER,
@@ -406,7 +433,8 @@ int main(int argc, char *argv[]) {
                                   WS_VISIBLE | WS_CHILD | WS_BORDER | SS_CENTER,
                                   490, 320, 80, 20, hwnd, NULL, NULL, NULL);
 
-    while (GetMessage(&msg, NULL, 0, 0)) {
+    while (GetMessage(&msg, NULL, 0, 0))
+    {
         DispatchMessage(&msg);
     }
 
