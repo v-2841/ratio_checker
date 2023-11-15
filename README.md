@@ -36,7 +36,7 @@ Open the Postrun program with the Data Explorer panel
 
 ![1](images/1.jpg)
 
-Navigate to the desired directory, select files with the gcd extension -> File Convert -> Data file to ASCII file...
+Navigate to the desired directory -> select .gcd files -> File Convert -> Data file to ASCII file...
 
 ![2](images/2.jpg)
 
@@ -44,15 +44,15 @@ Press OK
 
 ![3](images/3.jpg)
 
-Files with the txt extension will appear in the working directory. Each file will contain data from the chromatography of a single analysis
+.txt files will appear in the working directory. Each file will contain chromatography data of a single analysis
 
 ![4](images/4.jpg)
 
-You can perform calculations by command ```<path_to_file_folder>/ratio_checker.exe <path_to_file_folder>/<file_name>.txt``` or simply drag and drop a file with the txt extension onto the program icon
+You can perform calculations by command ```<path_to_project_folder>/ratio_checker.exe <path_to_file_folder>/<file_name>.txt``` or simply drag and drop a .txt file onto the program icon
 
 ![5](images/5.jpg)
 
-OR just use GUI application for Windows! Compile it with command:
+OR just use GUI application for Windows! Compile it with command
 ```
 gcc ratio_checker_gui.c resource.res -o "Ratio checker.exe"
 ```
