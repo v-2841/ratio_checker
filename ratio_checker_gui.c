@@ -296,6 +296,7 @@ int main(int argc, char *argv[])
         606, 419, NULL, NULL, NULL, NULL);
     ShowWindow(hwnd, SW_SHOWNORMAL);
     DragAcceptFiles(hwnd, TRUE);
+    free(rctScr);
 
     MSG msg;
 
