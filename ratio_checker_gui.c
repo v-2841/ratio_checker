@@ -9,6 +9,7 @@
 #include <shellapi.h>
 #include <tchar.h>
 
+#define VERSION "1.2"
 #define MAX_LINE_LENGTH 512
 #define IDI_ICON1 101
 #define PRECISION 2
@@ -208,19 +209,18 @@ void openFile(HWND hwnd)
 
 void showAboutDialog(HWND hwnd)
 {
-    MessageBox(hwnd,
-               "Copyright (c) 2023 Vitaliy Pavlov\nSource code: "
-               "https://github.com/v-2841/ratio_checker",
-               "About", MB_OK);
+    char aboutMessage[MAX_LINE_LENGTH];
+    sprintf(
+        aboutMessage, "Ratio Checker v%s\n\n"
+                      "Copyright (c) 2023 Vitaliy Pavlov\n"
+                      "Source code: https://github.com/v-2841/ratio_checker",
+        VERSION);
+    MessageBox(hwnd, aboutMessage, "About", MB_OK);
 }
 
-void onlineHelp()
+void localHelp()
 {
-    ShellExecute(
-        NULL, "open", "cmd",
-        "/c start "
-        "https://github.com/v-2841/ratio_checker#how-to-compute-ratios",
-        NULL, SW_HIDE);
+    ShellExecute(NULL, "open", "help.html", NULL, NULL, SW_SHOWNORMAL);
 }
 
 void menu(HWND hwnd)
@@ -257,14 +257,14 @@ LRESULT WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
         else if (LOWORD(wparam) == IDM_ABOUT)
             showAboutDialog(hwnd);
         else if (LOWORD(wparam) == IDM_ONLINE_HELP)
-            onlineHelp();
+            localHelp();
         else if (LOWORD(wparam) == IDM_EXIT)
             PostQuitMessage(0);
     }
     else if (message == WM_KEYDOWN)
     {
         if (LOWORD(wparam) == VK_F1)
-            onlineHelp();
+            localHelp();
         else if (GetKeyState(VK_CONTROL) & 0x8000 && wparam == 'O')
             openFile(hwnd);
     }

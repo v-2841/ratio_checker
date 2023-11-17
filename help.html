@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Help</title>
+    <style>
+      img {
+        max-width: 720px;
+        height: auto;
+      }
+      body {
+        width: 75%;
+        margin: 0 auto;
+        padding-bottom: 75px;
+      }
+      code {
+        background-color: #f0f0f0;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Check the ratio of fatty acids after analysis on the Shimadzu GC in accordance with GOST 32261</h1>
+    <p>
+      This program processes a data file from a Shimadzu GC, extracting the areas of specified fatty acids for further ratio analysis. The GOST 32261 standard establishes norms for the ratios of free fatty acids to determine the presence of
+      fats of plant origin. The chromatographic method should specify the retention times of peaks of free fatty acids, whose names contain at least those:
+    </p>
+    <ul>
+      <li>C12:0</li>
+      <li>C14:0</li>
+      <li>C16:0</li>
+      <li>C18:0</li>
+      <li>C18:1 trans</li>
+      <li>C18:1 cis</li>
+      <li>C18:2 trans</li>
+      <li>C18:2 cis</li>
+    </ul>
+    <a href="images/0.jpg">
+      <img src="images/0.jpg" alt="Shimadzu GC" />
+    </a>
+
+    <h2>Compilation script</h2>
+    <p>To compile the program with icon, execute the following commands:</p>
+    <code>
+      windres resource.rc -O coff -o resource.res<br />
+      gcc ratio_checker.c resource.res -o ratio_checker.exe
+    </code>
+
+    <h2>Fatty Acid Ratios</h2>
+    <p>The program calculates various ratios of fatty acids based on GOST 32261</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Ratio</th>
+          <th>Range</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>C16:0 : C12:0</td>
+          <td>5.8 - 14.5</td>
+        </tr>
+        <tr>
+          <td>C18:0 : C12:0</td>
+          <td>1.9 - 5.9</td>
+        </tr>
+        <tr>
+          <td>C18:1 : C14:0</td>
+          <td>1.6 - 3.6</td>
+        </tr>
+        <tr>
+          <td>C18:2 : C14:0</td>
+          <td>0.1 - 0.5</td>
+        </tr>
+        <tr>
+          <td>C18:1 + C18:2 : C12:0 + C14:0 + C16:0 + C18:0</td>
+          <td>0.4 - 0.7</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>How to compute ratios</h2>
+    <p>Open the Postrun program with the Data Explorer panel</p>
+    <a href="images/1.jpg">
+      <img src="images/1.jpg" alt="Postrun program" />
+    </a>
+    <p>Navigate to the desired directory -&gt; select .gcd files -&gt; File Convert -&gt; Data file to ASCII file...</p>
+    <a href="images/2.jpg">
+      <img src="images/2.jpg" alt="File Convert" />
+    </a>
+    <p>Press OK</p>
+    <a href="images/3.jpg">
+      <img src="images/3.jpg" alt="OK" />
+    </a>
+    <p>.txt files will appear in the working directory. Each file will contain chromatography data of a single analysis</p>
+    <a href="images/4.jpg">
+      <img src="images/4.jpg" alt="Chromatography data" />
+    </a>
+    <p>You can perform calculations by command <code>&lt;path_to_project_folder&gt;/ratio_checker.exe &lt;path_to_file_folder&gt;/&lt;file_name&gt;.txt</code> or simply drag and drop a .txt file onto the program icon</p>
+    <a href="images/5.jpg">
+      <img src="images/5.jpg" alt="Perform calculations" />
+    </a>
+    <p>OR just use GUI application for Windows! Compile it with command</p>
+    <code>
+      gcc ratio_checker_gui.c resource.res -o "Ratio checker.exe"
+    </code>
+  </body>
+</html>
