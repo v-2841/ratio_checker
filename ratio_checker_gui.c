@@ -9,7 +9,7 @@
 #include <shellapi.h>
 #include <tchar.h>
 
-#define VERSION "1.2"
+#define VERSION "1.2.1"
 #define MAX_LINE_LENGTH 512
 #define IDI_ICON1 101
 #define PRECISION 2
@@ -234,7 +234,7 @@ void menu(HWND hwnd)
     AppendMenu(hFileMenu, MF_STRING, IDM_EXIT, "Exit\tAlt+F4");
 
     HMENU hHelpMenu = CreatePopupMenu();
-    AppendMenu(hHelpMenu, MF_STRING, IDM_ONLINE_HELP, "Online manual\tF1");
+    AppendMenu(hHelpMenu, MF_STRING, IDM_ONLINE_HELP, "User manual\tF1");
     AppendMenu(hHelpMenu, MF_SEPARATOR, 0, NULL);
     AppendMenu(hHelpMenu, MF_STRING, IDM_ABOUT, "About Ratio Checker...");
 
