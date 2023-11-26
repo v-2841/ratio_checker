@@ -1,4 +1,47 @@
 // gcc -mwindows -static -m32 ratio_checker_gui.c resource.res -o "Ratio Checker.exe" -l gdi32 -l comdlg32
+/**
+ * Ratio Checker is a Windows-based GUI application designed to analyze lipid profile data
+ * and calculate specific ratios relevant to lipid composition. The program reads a text file
+ * containing chromatographic data of various fatty acid components and performs calculations
+ * to derive five distinct ratios:
+ *
+ * 1. C16:0 to C12:0 ratio
+ * 2. C18:0 to C12:0 ratio
+ * 3. C18:1 to C14:0 ratio
+ * 4. C18:2 to C14:0 ratio
+ * 5. Combined C18:1 and C18:2 to the sum of C12:0, C14:0, C16:0, and C18:0 ratio
+ *
+ * Functionality:
+ *
+ * - Upon opening a data file (text file format), the program extracts relevant chromatographic
+ *   areas for specific fatty acid components such as C12:0, C14:0, C16:0, C18:0, C18:1 trans/cis,
+ *   and C18:2 trans/cis.
+ *
+ * - Calculations are performed to derive the aforementioned ratios, offering insights into the
+ *   composition and proportions of these fatty acids within the sample.
+ *
+ * - Each ratio is evaluated against predefined ranges, determining whether the derived values
+ *   fall within acceptable bounds or not. The result is displayed as "Pass" or "Not pass" for
+ *   each ratio along with a comment.
+ *
+ * Additional Features:
+ *
+ * - Drag-and-drop functionality: Accepts data files dropped onto the application window.
+ *
+ * - Menu options: Provides the ability to open data files, access an about dialog displaying
+ *   version information, and access local help documentation.
+ *
+ * - Keyboard shortcuts: Supports keyboard shortcuts such as Ctrl+O for opening files and F1 for
+ *   accessing local help documentation.
+ *
+ * - GUI elements: Displays sample name, individual fatty acid areas, calculated ratios, and
+ *   evaluation results in a user-friendly graphical interface.
+ *
+ * The program allows researchers, particularly in lipid analysis, to quickly assess lipid profile
+ * data and evaluate the proportions of specific fatty acid components within samples based on
+ * predefined acceptable ratio ranges.
+ */
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
